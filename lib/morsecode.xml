@@ -1,6 +1,7 @@
 <codes>
   <summary>
     <recordx_type>dynarex</recordx_type>
+    <schema>codes/code(morse,char)</schema>
   </summary>
   <records>
     <code><morse>1</morse><char>t</char></code>
