@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+# file: morsecode.rb
+
+require 'dynarex'
+
+class MorseCode
+
+  def initialize(x)
+    buffer = File.open(File.dirname(__FILE__) + '/morsecode.xml','r').read
+    @h = Hash[Dynarex.new(buffer).to_h.map{|x| x.values[0..1]}]
+    
+    @x = x
+  end
+
+  def to_s
+    @x.split(/4/).map{|code| @h[code]}.join()
+  end
+
+  def to_mc
+    @x.split(//).map{|char| @h.invert[char]}.join('4')
+  end
+
+end
