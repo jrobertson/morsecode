@@ -2,23 +2,33 @@
 
 # file: morsecode.rb
 
-require 'dynarex'
 
 class MorseCode
 
-  def initialize(input_string)
-    buffer = File.open(File.dirname(__FILE__) + '/morsecode.xml','r').read
-    @h = Hash[Dynarex.new(buffer).to_h.map{|x| x.values[0..1]}]
+  def initialize(input_string='')
+    
+    @h = {
+      "t"=>"1", "m"=>"11", "n"=>"12", "o"=>"111", "g"=>"112", "q"=>"1121", 
+      "z"=>"1122", "k"=>"121", "d"=>"122", "-"=>"2211", "."=>"212121", 
+      "y"=>"1211", "c"=>"1212", "x"=>"1221", "b"=>"1222", "e"=>"2", "a"=>"21",
+      "i"=>"22", "w"=>"211", "r"=>"212", ""=>"2121", "l"=>"2122", "u"=>"221", 
+      "s"=>"222", "j"=>"2111", "p"=>"2112", "f"=>"2212", "v"=>"2221", 
+      "h"=>"2222", "1"=>"21111", "2"=>"22111", "3"=>"22211", "4"=>"22221", 
+      "5"=>"22222", "6"=>"12222", "7"=>"11222", "8"=>"11122", "9"=>"11112",
+      "0"=>"11111", " "=>"5", "_"=>"221121", ":"=>"222111", "/"=>"12212", 
+      "@"=>"211212", "?"=>"221122", "^"=>"3"
+    }
     
     @input_string = input_string
   end
 
   def to_s
-    @input_string.split(/4/).map{|code| @h[code]}.join()
+    @input_string.split(/5/).map \
+        {|word| word.split(/4/).map{|code| @h.invert[code]}.join }.join ' '
   end
 
   def to_mc
-    @input_string.split(//).map{|char| @h.invert[char]}.join('4')
+    @input_string.split(//).map{|char| @h[char]}.join('4')
   end
 
 end
