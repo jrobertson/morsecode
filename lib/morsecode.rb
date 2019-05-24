@@ -32,3 +32,82 @@ class MorseCode
   end
 
 end
+
+class MorseCodeInteractive
+
+  def initialize(dash: 'D', dot: 'C', separator: 'B', terminator: "\r", 
+                 debug: false)
+
+    @keys = {
+      dash: dash, 
+      dot: dot, 
+      separator: separator, 
+      terminator: terminator
+    }
+
+    @mc = ''
+    @debug = debug
+
+  end
+
+  def input(c)
+
+    h = {
+      dash: :dash, 
+      dot: :dot, 
+      separator: :separator, 
+      terminator: :submit
+    }
+
+    if @debug then
+      puts 'c: ' + c.inspect
+      puts '@keys.invert: ' + @keys.invert.inspect
+    end
+
+    key = @keys.invert[c]
+    puts 'key: ' + key.inspect if @debug
+    found = h[key]
+    puts 'found: ' + found.inspect if @debug
+    method(found).call if found
+
+  end
+
+  def on_dash() end
+  def on_dot() end
+    
+  def on_separator(c)
+    puts 'c: ' + c.inspect
+  end
+  
+  def on_submit(s)
+    puts 's: ' + s.inspect    
+  end
+
+  private
+
+  def dash()
+    @mc += '1'
+    on_dash()
+  end
+
+  def dot()
+    @mc += '2'
+    on_dot()
+  end
+
+  def separator()
+    
+    @mc += @mc[-1] =='4' ? '5' : '4'
+    s = MorseCode.new(@mc).to_s[-1]
+    on_separator(s)
+
+  end
+
+  def submit()
+
+    s = MorseCode.new(@mc).to_s 
+    on_submit(s)
+    @mc = ''  
+
+  end
+end

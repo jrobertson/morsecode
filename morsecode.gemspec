@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'morsecode'
-  s.version = '0.2.1'
+  s.version = '0.3.0'
   s.summary = 'Transforms Morse code to a string, or a string into Morse code'
   s.authors = ['James Robertson']
   s.files = Dir['lib/morsecode.rb']
